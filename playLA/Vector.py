@@ -1,12 +1,26 @@
+import math
+from ._global import EPSILON
+
+
 class Vector:
     def __init__(self, lst):
         self._values = list(lst)
 
     @classmethod
-    def zero(cls,dim):
+    def zero(cls, dim):
         """返回一个dim维的零向量
         zero_vec = Vector.zero(2)"""
         return cls([0] * dim)
+
+    def norm(self):
+        """返回向量的模
+        print("norm({}) = {}".format(vec2, vec2.norm()))"""
+        return math.sqrt(sum(e ** 2 for e in self))
+
+    def normalize(self):
+        """返回向量对应的单位向量
+        print("normalize({}) = {}".format(vec1, vec1.normalize()))"""
+        return self / self.norm()
 
     def __add__(self, other):
         """向量加法，返回结果向量
@@ -22,18 +36,26 @@ class Vector:
             "Error in subtracting. Length of vectors must be same"
         return Vector([a - b for a, b in zip(self, other)])
 
+    def dot(self, other):
+        assert len(self) == len(other), \
+            "Error in dot product. Length must be same."
+        return sum(a * b for a, b in zip(self, other))
+
     # mul是定义了一个左乘的数学运算
     def __mul__(self, k):
-        """向量的数量乘法，返回结果向量：
-        print("{}*{}={}".format(vec1, 3, vec1*3))"""
+        """向量的数量乘法，返回结果向量：self * k"""
         return Vector([k * a for a in self])
 
     # rmul是定义了一个右乘的数学运算
     def __rmul__(self, k):
-        """返回数量乘法的结果向量
-        print("{}*{}={}".format(3, vec1, 3 * vec1))
-        """
+        """返回数量乘法的结果向量: k * self"""
         return self * k
+
+    def __truediv__(self, k):
+        """返回数量除法的结果向量：self / k"""
+        if self.norm() < EPSILON:
+            raise ZeroDivisionError("Normalize error!norm is zero.")
+        return (1 / k) * self
 
     def __pos__(self):
         """返回向量取正的结果向量
