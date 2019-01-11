@@ -29,3 +29,9 @@ if __name__ == '__main__':
     print("16 B.dot(A)={}".format(matrix2.dot(matrix)))
 
     print("17 {}.T()={}".format(P, P.T()))
+
+    # 生成一个单位矩阵
+    I = Matrix.identity(2)
+    print(I)
+    print("18 {}.dot({})={}".format(matrix, I, matrix.dot(I)))
+    print("19 {}.dot({})={}".format(I, matrix, I.dot(matrix)))

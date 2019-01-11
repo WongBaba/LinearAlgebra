@@ -31,8 +31,19 @@ if __name__ == '__main__':
     printf(A * B, "numpy中的矩阵乘法指的是逐元素相乘")
     printf(A.dot(B), "矩阵和矩阵的点乘")
 
-    # 矩阵和向量的运算
+    # 5.矩阵和向量的运算
     p = np.array([10, 100])
     printf(A + p, "矩阵与向量的加法")
     printf(A + 1, "矩阵与数值的加法")
     printf(A.dot(p), "矩阵与向量的点乘")
+
+    # 6.单位矩阵
+    I = np.identity(2)
+    printf(A.dot(I), "单位矩阵与向量相乘(A.dot(I))")
+    printf(I.dot(A), "单位矩阵与向量相乘(I.dot(A))")
+
+    # 使用逆矩阵
+    invA = np.linalg.inv(A)
+    printf(invA, "A的逆矩阵")
+    printf(A.dot(invA), "A与A的逆矩阵相乘")
+    printf(invA.dot(A), "A的逆矩阵与A相乘")

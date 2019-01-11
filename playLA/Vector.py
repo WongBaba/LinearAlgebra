@@ -1,5 +1,5 @@
 import math
-from ._global import EPSILON
+from ._global import EPSILON, is_zero
 
 
 class Vector:
@@ -20,6 +20,9 @@ class Vector:
     def normalize(self):
         """返回向量对应的单位向量
         print("normalize({}) = {}".format(vec1, vec1.normalize()))"""
+
+        if is_zero(self.norm()):
+            raise ZeroDivisionError("Normalize error! norm is zero.")
         return self / self.norm()
 
     def __add__(self, other):
@@ -37,9 +40,14 @@ class Vector:
         return Vector([a - b for a, b in zip(self, other)])
 
     def dot(self, other):
+        """向量的点乘,两个向量相应元素相乘的和"""
         assert len(self) == len(other), \
             "Error in dot product. Length must be same."
         return sum(a * b for a, b in zip(self, other))
+
+    def underlying_list(self):
+        """返回向量类的底层列表"""
+        return self._values[:]
 
     # mul是定义了一个左乘的数学运算
     def __mul__(self, k):
